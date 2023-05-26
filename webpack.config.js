@@ -6,7 +6,7 @@ module.exports = {
     entry: "./src/js/index.js",
     plugins: [
         new HtmlWebpackPlugin({
-            title: "Restaurant Page",
+            title: "Pythagora's Pizzaria",
         }),
     ],
     devtool: "inline-source-map",
@@ -20,7 +20,11 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
+            },
         ],
     },
 };

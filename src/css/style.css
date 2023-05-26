@@ -1,0 +1,20 @@
+:root {
+    --brown: #644536;
+    --redwood: #b2675e;
+    --lion-brown: #c4a381;
+    --pistachio-green: #bbd686;
+    --cream: #eef1bd;
+}
+
+.background {
+    width: 100%;
+    height: auto;
+}
+
+#content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
