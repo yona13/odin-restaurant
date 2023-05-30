@@ -3,15 +3,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./src/js/index.js",
+    entry: {
+        index: "./src/js/index.js",
+        contentManager: "./src/js/content-manager.js",
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: "Pythagora's Pizzaria",
         }),
     ],
     devtool: "inline-source-map",
+    devServer: {
+        static: "./dist",
+    },
     output: {
-        filename: "main.js",
+        filename: "[name].main.js",
         path: path.resolve(__dirname, "dist"),
         clean: true,
     },
@@ -25,6 +31,13 @@ module.exports = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: "asset/resource",
             },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: "asset/resource",
+            },
         ],
+    },
+    optimization: {
+        runtimeChunk: "single"
     },
 };

@@ -1,9 +1,11 @@
 import "../css/normalise.css";
 import "../css/style.css";
 import Pizzaria from "../images/pizza.jpg";
+import ContentManager from "./content-manager.js";
 
 /* Variables */
 let initialised = false;
+const cm = new ContentManager();
 
 /**
  * Initialise Function
@@ -16,17 +18,20 @@ function initialise () {
     background.classList.add("background");
     document.body.appendChild(background);
 
-    background.addEventListener("click", (e) => {console.log(e)});  // TODO: delete after use
-
     const content = document.createElement("div");
     content.id = "content";
-    document.body.appendChild(content);
+    
+    cm.generate();
 
-    const nav = document.createElement("div");
-    nav.classList.add("nav");
-    content.appendChild(nav);
+    content.appendChild(cm.nav);
+    content.appendChild(cm.core);
+
+    const footer = document.createElement("div");
+    footer.classList.add("footer");
+    content.appendChild(footer);
 
     initialised = true;
+    document.body.appendChild(content);
     console.log("initialised!");
 }
 
@@ -40,5 +45,4 @@ function render () {
         initialise();
 }
 
-// Render DOM
 render();

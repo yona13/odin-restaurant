@@ -4,17 +4,91 @@
     --lion-brown: #c4a381;
     --pistachio-green: #bbd686;
     --cream: #eef1bd;
+    --small-dimen: 0.5rem;
+    --home-size: 2rem;
+}
+
+@font-face {
+    font-family: "Bold one";
+    src: url("../fonts/Classica-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Bold-Oblique one";
+    src: url("../fonts/Classica-BoldOblique.ttf");
+}
+
+@font-face {
+    font-family: "Book one";
+    src: url("../fonts/Classica-Book.ttf");
+}
+
+@font-face {
+    font-family: "Book-Oblique one";
+    src: url("../fonts/Classica-BookOblique.ttf");
 }
 
 .background {
     width: 100%;
-    height: auto;
+    height: 100vh;
+    object-fit: cover;
 }
 
 #content {
     position: absolute;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
+
+.nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav > div,
+.nav > button {
+    padding: var(--small-dimen);
+    transition: 0.2s box-shadow ease-in-out;
+}
+
+.nav-button {
+    color: var(--cream);
+    background: none;
+    border: none;
+    font-family: "Book-Oblique one";
+}
+
+#nav-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--small-dimen);
+    align-items: center;
+}
+
+#nav-button {
+    font-size: var(--home-size);
+    font-family: "Bold-Oblique one";
+}
+
+.nav-icon {
+    width: var(--home-size);
+    height: var(--home-size);
+}
+
+.key-selected {
+    box-shadow: 0rem 0.4rem 0.2rem -0.2rem var(--cream);
+}
+
+.menu {}
+
+.contact {}
+
+.home {}
