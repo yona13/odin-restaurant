@@ -189,6 +189,59 @@ export default class ContentManager {
         this._core.appendChild(this._cores[this._index]);
     }
 
+    buildContactForm () {
+        const contactForm = document.createElement("form");
+        contactForm.noValidate = true;  // prevent submission
+        
+        // Create form rows
+        ["Name", "Email", "Message"].forEach(i => {
+            const formRow = document.createElement("div");
+            formRow.classList.add("form-row");
+            
+            if (i !== "Message") {
+                // Create Input Element
+                const inputElement = document.createElement("input");
+                inputElement.id = i.toLowerCase();
+                inputElement.required = true;
+                
+                inputElement.setAttribute(
+                    "type",
+                    i !== "Email" ? "text" : "email"
+                );
+                formRow.appendChild(inputElement);
+            } else {
+                const textElement = document.createElement("textarea");
+                textElement.id = i.toLowerCase();
+                textElement.required = true;
+                textElement.setAttribute("rows", 5);
+                formRow.appendChild(textElement);
+            }
+            
+            // Create Input Label Element
+            const labelElement = document.createElement("label");
+            labelElement.setAttribute("for", i.toLowerCase());
+            labelElement.textContent = i;
+
+            // Create Error Span Element
+            const spanElement = document.createElement("span");
+            spanElement.classList.add("error");
+            spanElement.classList.add(i.toLowerCase());
+
+            // Add elements to other elements
+            formRow.appendChild(labelElement);
+            formRow.appendChild(spanElement);
+            contactForm.appendChild(formRow);
+        });
+
+        // Create Submit Button
+        const btn = document.createElement("button");
+        btn.setAttribute("type", "submit");
+        btn.textContent = "Send message!";
+        contactForm.appendChild(btn);
+
+        return contactForm;
+    }
+
     /**
      * Build Core Elements Function
      */
@@ -201,6 +254,25 @@ export default class ContentManager {
         // Build Contact Element
         const contactCore = document.createElement("div");
         contactCore.classList.add("contact");
+        const keyValues = {
+            "info": "Get in touch, and one of my followers will get back to you as soon as possible. Remember, do not take roads traveled by the public.",
+            "form": "", 
+            "email": "pythagoras@pi.it", 
+            "phone": "+39 345 6091109", 
+            "address": "Giardino di Pitagora, Crotone, Provincia di Crotone, Italia 88900"
+        };
+        ["info", "form", "email", "phone", "address"].forEach(k => {
+            const contactElement = document.createElement("div");
+            if (k === "info" || k === "form")
+                contactElement.id = `contact-${k}`;
+            else
+                contactElement.id = `restaurant-${k}`;
+            if (k !== "form")
+                contactElement.textContent = keyValues[k];
+            else 
+                contactElement.appendChild(this.buildContactForm());
+            contactCore.appendChild(contactElement);
+        });
         // TODO: Build Contact
 
         // Build Home Element

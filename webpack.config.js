@@ -9,7 +9,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: "Pythagora's Pizzaria",
+            title: "Pythagoras' Pis",
         }),
     ],
     devtool: "inline-source-map",

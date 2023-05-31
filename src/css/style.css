@@ -1,6 +1,7 @@
 :root {
     --brown: #644536;
     --redwood: #b2675e;
+    --redwood-opaque: rgba(178, 103, 94, 0.5);
     --lion-brown: #c4a381;
     --pistachio-green: #bbd686;
     --cream: #eef1bd;
@@ -26,6 +27,10 @@
 @font-face {
     font-family: "Book-Oblique one";
     src: url("../fonts/Classica-BookOblique.ttf");
+}
+
+body {
+    font-family: "Book one";
 }
 
 .background {
@@ -89,6 +94,37 @@
 
 .menu {}
 
-.contact {}
+.contact {
+    display: grid;
+    grid-template-areas: 
+        "info info"
+        "form email"
+        "form phone"
+        "form address"
+        "form address";
+    padding: 2rem;
+    gap: var(--small-dimen);
+    background-color: var(--redwood-opaque);
+}
+
+#contact-info {
+    grid-area: info;
+}
+
+#contact-form {
+    grid-area: form;
+}
+
+#restaurant-email {
+    grid-area: email;
+}
+
+#restaurant-phone {
+    grid-area: phone;
+}
+
+#restaurant-address {
+    grid-area: address;
+}
 
 .home {}
