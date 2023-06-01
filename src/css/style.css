@@ -1,10 +1,13 @@
 :root {
+    --black: #1f1f1f;
     --brown: #644536;
     --redwood: #b2675e;
     --redwood-opaque: rgba(178, 103, 94, 0.5);
     --lion-brown: #c4a381;
     --pistachio-green: #bbd686;
     --cream: #eef1bd;
+    --cream-opaque: rgba(238, 241, 189, 0.5);
+    --light-cream: #fffefd;
     --small-dimen: 0.5rem;
     --home-size: 2rem;
 }
@@ -30,6 +33,8 @@
 }
 
 body {
+    color: var(--cream);
+    font-size: 1rem;
     font-family: "Book one";
 }
 
@@ -64,7 +69,7 @@ body {
 }
 
 .nav-button {
-    color: var(--cream);
+    color: inherit;
     background: none;
     border: none;
     font-family: "Book-Oblique one";
@@ -107,12 +112,52 @@ body {
     background-color: var(--redwood-opaque);
 }
 
+.info-block,
+.form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label,
+.form-label,
+#pythagoras-label {
+    color: var(--light-cream);
+    font-size: 0.8rem;
+    font-family: "Book-Oblique one";
+}
+
+#address-value {
+    display: flex;
+    flex-direction: column;
+}
+
 #contact-info {
     grid-area: info;
+    font-family: "Book-Oblique one";
 }
 
 #contact-form {
     grid-area: form;
+}
+
+.form-input {
+    color: var(--pistachio-green);
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--black);
+    margin-bottom: var(--small-dimen);
+}
+
+.form-input:focus {
+    outline: none;
+}
+
+#form-submit {
+    background-color: var(--pistachio-green);
+    color: var(--light-cream);
+    border: none;
+    padding: var(--small-dimen);
+    border-radius: var(--small-dimen);
 }
 
 #restaurant-email {
@@ -127,4 +172,28 @@ body {
     grid-area: address;
 }
 
-.home {}
+.home {
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--cream-opaque);
+    border-radius: var(--small-dimen);
+    box-shadow: var(--small-dimen) var(--small-dimen) var(--black);
+    overflow: auto;
+    max-height: 70vh;
+}
+
+#welcome-title {
+    text-align: center;
+}
+
+.message-span {
+    text-align: center;
+    margin-bottom: var(--small-dimen);
+}
+
+#pythagoras-portrait {
+    width: 70%;
+}

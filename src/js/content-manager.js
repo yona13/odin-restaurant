@@ -1,4 +1,5 @@
 import PizzaIcon from "../images/pizza.png";
+import PythagorasPortrait from "../images/pythagoras-portrait.png";
 
 export default class ContentManager {
     /**
@@ -130,7 +131,8 @@ export default class ContentManager {
         // First, create button with restaurant name
         const homeBtn = document.createElement("button");
         homeBtn.classList.add("nav-button");
-        homeBtn.textContent = "Pythagoras' Pizzaria"; // hard-coded
+        homeBtn.textContent = "Pythagorean Pizzaria"; // hard-coded
+        
         
         // Next, create icon element (courtesy FlatIcon)
         const icon = new Image();
@@ -189,6 +191,36 @@ export default class ContentManager {
         this._core.appendChild(this._cores[this._index]);
     }
 
+    buildRestaurantInfo(key, value) {
+        const restInfo = document.createElement("div");
+        restInfo.classList.add("info-block");
+        restInfo.id = `${key}-info-block`;
+
+        const keyLabel = document.createElement("label");
+        keyLabel.classList.add("info-label");
+        keyLabel.setAttribute("for", `${key}-value`);
+        keyLabel.textContent = key;
+
+        const valueSpan = document.createElement("span");
+        valueSpan.classList.add("info-value");
+        valueSpan.id = `${key}-value`;
+        if (key !== "address")
+            valueSpan.textContent = value;
+        else {
+            const arr = value.split(",");
+            for (var i = 0; i < arr.length; i++) {
+                const lineSpan = document.createElement("span");
+                lineSpan.textContent += arr[i] + (i < arr.length - 1 ? "," : "");
+                valueSpan.appendChild(lineSpan);
+            }
+        }
+
+        restInfo.appendChild(keyLabel);
+        restInfo.appendChild(valueSpan);
+
+        return restInfo;
+    }
+
     buildContactForm () {
         const contactForm = document.createElement("form");
         contactForm.noValidate = true;  // prevent submission
@@ -198,9 +230,17 @@ export default class ContentManager {
             const formRow = document.createElement("div");
             formRow.classList.add("form-row");
             
+            // Create Input Label Element
+            const labelElement = document.createElement("label");
+            labelElement.classList.add("form-label");
+            labelElement.setAttribute("for", i.toLowerCase());
+            labelElement.textContent = i;
+            formRow.appendChild(labelElement);
+            
             if (i !== "Message") {
                 // Create Input Element
                 const inputElement = document.createElement("input");
+                inputElement.classList.add("form-input");
                 inputElement.id = i.toLowerCase();
                 inputElement.required = true;
                 
@@ -211,30 +251,25 @@ export default class ContentManager {
                 formRow.appendChild(inputElement);
             } else {
                 const textElement = document.createElement("textarea");
+                textElement.classList.add("form-input");
                 textElement.id = i.toLowerCase();
                 textElement.required = true;
                 textElement.setAttribute("rows", 5);
                 formRow.appendChild(textElement);
             }
-            
-            // Create Input Label Element
-            const labelElement = document.createElement("label");
-            labelElement.setAttribute("for", i.toLowerCase());
-            labelElement.textContent = i;
 
             // Create Error Span Element
             const spanElement = document.createElement("span");
             spanElement.classList.add("error");
             spanElement.classList.add(i.toLowerCase());
-
-            // Add elements to other elements
-            formRow.appendChild(labelElement);
             formRow.appendChild(spanElement);
+
             contactForm.appendChild(formRow);
         });
 
         // Create Submit Button
         const btn = document.createElement("button");
+        btn.id = "form-submit";
         btn.setAttribute("type", "submit");
         btn.textContent = "Send message!";
         contactForm.appendChild(btn);
@@ -255,7 +290,7 @@ export default class ContentManager {
         const contactCore = document.createElement("div");
         contactCore.classList.add("contact");
         const keyValues = {
-            "info": "Get in touch, and one of my followers will get back to you as soon as possible. Remember, do not take roads traveled by the public.",
+            "info": "Get in touch, and a Pythagorean will get back to you. Remember, do not take roads traveled by the public.",
             "form": "", 
             "email": "pythagoras@pi.it", 
             "phone": "+39 345 6091109", 
@@ -267,9 +302,11 @@ export default class ContentManager {
                 contactElement.id = `contact-${k}`;
             else
                 contactElement.id = `restaurant-${k}`;
-            if (k !== "form")
+            if (k === "info")
                 contactElement.textContent = keyValues[k];
-            else 
+            else if (k !== "form")
+                contactElement.appendChild(this.buildRestaurantInfo(k, keyValues[k]));
+            else
                 contactElement.appendChild(this.buildContactForm());
             contactCore.appendChild(contactElement);
         });
@@ -278,7 +315,37 @@ export default class ContentManager {
         // Build Home Element
         const homeCore = document.createElement("div");
         homeCore.classList.add("home");
-        // TODO: Build Home
+
+        const homeTitle = document.createElement("h1");
+        homeTitle.id = "welcome-title";
+        homeTitle.textContent = "WELCOME TO THE PYTHAGOREAN PIZZARIA";
+        homeCore.appendChild(homeTitle);
+
+        const homeMessages = {
+            "intro": "Following the 'Pythagorean diet', all the food is made without meat, beans or fish",
+            "opening": "Open from 10am - Late",
+            "weekly": "Seven days a week",
+            "happy-hour": "Happy Hour: 3pm - 7pm"
+        };
+
+        Object.keys(homeMessages).forEach(k => {
+            const messageSpan = document.createElement("span");
+            messageSpan.classList.add("message-span");
+            messageSpan.id = `${k}-message`
+            messageSpan.textContent = homeMessages[k];
+            homeCore.appendChild(messageSpan);
+        });
+        
+        const pyPort = new Image();
+        pyPort.id = "pythagoras-portrait";
+        pyPort.src = PythagorasPortrait;
+        homeCore.appendChild(pyPort);
+
+        const pyLabel = document.createElement("label");
+        pyLabel.id = "pythagoras-label";
+        pyLabel.setAttribute("for", "pythagoras-portrait");
+        pyLabel.textContent = "Portrait of Pythagoras";
+        homeCore.appendChild(pyLabel);
 
         // Add elements to cores array
         this._cores.push(menuCore);
