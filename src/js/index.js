@@ -4,45 +4,37 @@ import Pizzaria from "../images/pizza.jpg";
 import ContentManager from "./content-manager.js";
 
 /* Variables */
-let initialised = false;
 const cm = new ContentManager();
 
 /**
- * Initialise Function
+ * Render Function
  * 
- * Initialises the elements for the DOM
+ * Initialises layout using Content Manager
  */
-function initialise () {
+function render () {
+    // Setup the background image
     const background = new Image();
     background.src = Pizzaria;
     background.classList.add("background");
     document.body.appendChild(background);
 
+    // Create Content Element
     const content = document.createElement("div");
     content.id = "content";
     
+    // Use Content Manager to Generate layout
     cm.generate();
-
     content.appendChild(cm.nav);
     content.appendChild(cm.core);
 
+    // Add Footer
     const footer = document.createElement("div");
     footer.classList.add("footer");
+    footer.textContent = "Yona \u00a9 2023";
     content.appendChild(footer);
 
-    initialised = true;
     document.body.appendChild(content);
-    console.log("initialised!");
 }
 
-/**
- * Render Function
- * 
- * Initialises DOM & // TODO: Add additional features
- */
-function render () {
-    if (!initialised) // Setup content div
-        initialise();
-}
-
+// Render everything
 render();

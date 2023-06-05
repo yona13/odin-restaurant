@@ -6,6 +6,7 @@ module.exports = {
     entry: {
         index: "./src/js/index.js",
         contentManager: "./src/js/content-manager.js",
+        menuData: "./src/js/menu-data.js",
     },
     plugins: [
         new HtmlWebpackPlugin({

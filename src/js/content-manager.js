@@ -1,5 +1,6 @@
 import PizzaIcon from "../images/pizza.png";
 import PythagorasPortrait from "../images/pythagoras-portrait.png";
+import menuData from "../js/menu-data.js";
 
 export default class ContentManager {
     /**
@@ -12,6 +13,7 @@ export default class ContentManager {
         // Initialise variables
         this._keys = ["Menu", "Contact"];
         this.index = this._keys.length;
+        this._current_course = "";
         
         // Initialise HTML Elements
         this.nav = document.createElement("div");
@@ -47,37 +49,55 @@ export default class ContentManager {
 
     /**
      * Navigation Panel Element Getter
-     * // TODO: Add information
+     * 
+     * Return navigation panel element
+     * 
+     * @returns navigation panel element
      */
     get nav () { return this._nav; }
 
     /**
      * Navigation Panel Element Setter
-     * // TODO: Add information
+     * 
+     * Set navigation panel element
+     * 
+     * @param {HTMLElement} obj navigation panel element
      */
     set nav (obj) { this._nav = obj; }
 
     /**
      * Core Panel Element Getter
-     * // TODO: Add information
+     * 
+     * Return core element
+     * 
+     * @returns core element
      */
     get core () { return this._core; }
 
     /**
      * Core Panel Element Setter
-     * // TODO: Add information
+     * 
+     * Set core element
+     * 
+     * @param {HTMLElement} obj core element
      */
     set core (obj) { this._core = obj; }
 
     /**
      * Core-element Array Getter
-     * // TODO: Add information
+     * 
+     * Return core element array
+     * 
+     * @returns core elements array
      */
     get cores () { return this._cores; }
 
     /**
      * Core-element Array Setter
-     * // TODO: Add information
+     * 
+     * Sets core element array
+     * 
+     * @param {Array} arr array of core elements
      */
     set cores (arr) {
         this._cores = [];
@@ -191,19 +211,35 @@ export default class ContentManager {
         this._core.appendChild(this._cores[this._index]);
     }
 
+    /**
+     * Built Restaurant Information Elements
+     * 
+     * For the Contact Core Element, this function will create 
+     * the HTML elements for a given key-value pair of restaurant
+     * information
+     * 
+     * @param {String} key name for information
+     * @param {String} value values of the information
+     * @returns HTML element representing restaurant information
+     */
     buildRestaurantInfo(key, value) {
+        // Create Restaurant Information Element
         const restInfo = document.createElement("div");
         restInfo.classList.add("info-block");
         restInfo.id = `${key}-info-block`;
 
+        // Add a label for the key
         const keyLabel = document.createElement("label");
         keyLabel.classList.add("info-label");
         keyLabel.setAttribute("for", `${key}-value`);
         keyLabel.textContent = key;
 
+        // Add the value
         const valueSpan = document.createElement("span");
         valueSpan.classList.add("info-value");
         valueSpan.id = `${key}-value`;
+
+        // Only split the lines for addresses
         if (key !== "address")
             valueSpan.textContent = value;
         else {
@@ -215,12 +251,21 @@ export default class ContentManager {
             }
         }
 
+        // Add key-value to element
         restInfo.appendChild(keyLabel);
         restInfo.appendChild(valueSpan);
 
         return restInfo;
     }
 
+    /**
+     * Build Contact Form Element Function
+     * 
+     * For the Contact Core Element, builds the default
+     * contact form for customer to send to restaurant
+     * 
+     * @returns HTML Element for Contact Form
+     */
     buildContactForm () {
         const contactForm = document.createElement("form");
         contactForm.noValidate = true;  // prevent submission
@@ -278,13 +323,80 @@ export default class ContentManager {
     }
 
     /**
+     * Add Course Title Function
+     * 
+     * Add Appetisers, Mains or Desserts title to Menu Core element
+     * 
+     * @param {String} courseType appetisers, mains or desserts
+     * @returns HTML element representing course title
+     */
+    addCourse (courseType) {
+        // Create H2 object to represent title
+        const course = document.createElement("h2");
+        course.classList.add(`${courseType.toLowerCase()}-title`);
+        course.textContent = courseType;
+        this._current_course = courseType;
+
+        return course;
+    }
+
+    /**
+     * Build Menu Card Element Function
+     * 
+     * For the Menu Core Element, for each menu object, 
+     * this function will build a card HTML object to the core
+     * 
+     * @param {Object} menuObj menu object
+     * @returns HTML element representing menu card
+     */
+    buildMenuCard (menuObj) {
+        // Create Div element for Card
+        const menuDiv = document.createElement("div");
+        menuDiv.classList.add("menu-object");
+
+        // Add Image to Card from Object
+        const menuPic = new Image();
+        menuPic.classList.add("menu-pic");
+        menuPic.src = menuObj.src;
+        menuDiv.appendChild(menuPic);
+
+        // Add Meal Name to Card from Object
+        const menuName = document.createElement("h3");
+        menuName.classList.add("menu-name");
+        menuName.textContent = menuObj.name;
+        menuDiv.appendChild(menuName);
+
+        // Add Meal Price to Card from Object
+        const menuPrice = document.createElement("h3");
+        menuPrice.classList.add("menu-price");
+        menuPrice.textContent = `$${menuObj.price}`;
+        menuDiv.appendChild(menuPrice);
+
+        // Add Meal Description to Card from Object
+        const menuDesc = document.createElement("span");
+        menuDesc.classList.add("menu-description");
+        menuDesc.textContent = menuObj.description;
+        menuDiv.appendChild(menuDesc);
+
+        return menuDiv;
+    }
+
+    /**
      * Build Core Elements Function
      */
     buildCores () {
         // Build Menu Element
         const menuCore = document.createElement("div");
         menuCore.classList.add("menu");
-        // TODO: Build Menu
+        menuData.forEach(obj => {
+            if (this._current_course === "" && obj.course === "starter")
+                menuCore.appendChild(this.addCourse("Appetisers"));
+            else if (this._current_course === "Appetisers" && obj.course === "main")
+                menuCore.appendChild(this.addCourse("Mains"));
+            else if (this._current_course === "Mains" && obj.course === "dessert") 
+                menuCore.appendChild(this.addCourse("Desserts"));
+            menuCore.appendChild(this.buildMenuCard(obj));
+        });
 
         // Build Contact Element
         const contactCore = document.createElement("div");
@@ -296,6 +408,8 @@ export default class ContentManager {
             "phone": "+39 345 6091109", 
             "address": "Giardino di Pitagora, Crotone, Provincia di Crotone, Italia 88900"
         };
+
+        // Add Contact Core Elements
         ["info", "form", "email", "phone", "address"].forEach(k => {
             const contactElement = document.createElement("div");
             if (k === "info" || k === "form")
@@ -310,17 +424,18 @@ export default class ContentManager {
                 contactElement.appendChild(this.buildContactForm());
             contactCore.appendChild(contactElement);
         });
-        // TODO: Build Contact
 
         // Build Home Element
         const homeCore = document.createElement("div");
         homeCore.classList.add("home");
 
+        // Add Home Title
         const homeTitle = document.createElement("h1");
         homeTitle.id = "welcome-title";
         homeTitle.textContent = "WELCOME TO THE PYTHAGOREAN PIZZARIA";
         homeCore.appendChild(homeTitle);
 
+        // Add Home Information
         const homeMessages = {
             "intro": "Following the 'Pythagorean diet', all the food is made without meat, beans or fish",
             "opening": "Open from 10am - Late",
@@ -336,6 +451,7 @@ export default class ContentManager {
             homeCore.appendChild(messageSpan);
         });
         
+        // Add Portrait of Pythagoras
         const pyPort = new Image();
         pyPort.id = "pythagoras-portrait";
         pyPort.src = PythagorasPortrait;

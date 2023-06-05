@@ -6,3 +6,4 @@ Restaurant Page - Odin Project
  - Pizza Icon made by Flat Icon from https://www.flaticon.com/free-icon/pizza_1156782
  - Potrait of Pythagoras image by Gordon Johnson a.k.a. GDJ on pixabay. Retrieved from https://pixabay.com/vectors/pythagoras-portrait-line-art-greek-5652846/
  - Classica Font designed by Wojciech Kalinowski "wmk69" (wmk69@o2.pl). Retrieved from https://fontlibrary.org/en/font/classica
+ - Menu photos taken by @azerbaijan_stockers from Freepik. Retrieved from https://www.freepik.com/author/azerbaijan-stockers

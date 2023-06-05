@@ -5,6 +5,7 @@
     --redwood-opaque: rgba(178, 103, 94, 0.5);
     --lion-brown: #c4a381;
     --pistachio-green: #bbd686;
+    --pistachio-green-opaque: rgba(187, 230, 134, 0.5);
     --cream: #eef1bd;
     --cream-opaque: rgba(238, 241, 189, 0.5);
     --light-cream: #fffefd;
@@ -97,7 +98,49 @@ body {
     box-shadow: 0rem 0.4rem 0.2rem -0.2rem var(--cream);
 }
 
-.menu {}
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-dimen);
+    overflow: auto;
+    max-height: 70vh;
+    padding: 2rem;
+    border-radius: var(--small-dimen);
+    box-shadow: var(--small-dimen) var(--small-dimen) var(--black);
+    background-color: var(--pistachio-green-opaque);
+}
+
+.menu h2 {
+    text-align: center;
+}
+
+.menu-object {
+    display: grid;
+    grid-template-areas:
+        "image name price"
+        "image description description";
+}
+
+.menu-pic {
+    grid-area: image;
+    margin-right: var(--small-dimen);
+    width: 8rem;
+    height: 8rem;
+    object-position: center center;
+}
+
+.menu-name {
+    grid-area: name;
+}
+
+.menu-price {
+    grid-area: price;
+    margin-left: var(--small-dimen);
+}
+
+.menu-description {
+    grid-area: description;
+}
 
 .contact {
     display: grid;
@@ -185,10 +228,7 @@ body {
     max-height: 70vh;
 }
 
-#welcome-title {
-    text-align: center;
-}
-
+#welcome-title,
 .message-span {
     text-align: center;
     margin-bottom: var(--small-dimen);
